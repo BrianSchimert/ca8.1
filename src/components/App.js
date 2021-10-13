@@ -3,6 +3,7 @@ import NavBar from './NavBar.js';
 import ModeTabs from './ModeTabs.js';
 import LoginPage from './LoginPage.js';
 import AppMode from './AppMode.js';
+import FeedPage from './FeedPage.js';
 
 class App extends React.Component {
 
@@ -11,11 +12,13 @@ class App extends React.Component {
     this.state = {mode: AppMode.LOGIN,
                   menuOpen: false,
                   modalOpen: false,
+                  dialogOpen: false,
+                  testField:false,
                   userId: ""};
   }
 
   setMode = (newMode) => {
-    this.setState({mode: newMode});
+    this.setState({mode: newMode, testField: true});
   }
 
   toggleMenuOpen = () => {
@@ -30,12 +33,14 @@ class App extends React.Component {
     this.setState({userId: Id});
   }
 
+  //in render, added a conditional to render either login page or feedpage, depending on the apps state
+  //also, pass the setMode as a property to LoginPage
   render() {
     return (
       <>
         <NavBar mode={this.state.mode}
                 menuOpen={this.state.menuOpen}
-                toggleMenuOpen={this.state.toggleMenuOpen}
+                toggleMenuOpen={this.toggleMenuOpen}
                 modalOpen={this.state.modalOpen}
                 toggleModalOpen={this.toggleModalOpen}
                 userId={this.state.userId}
@@ -46,11 +51,18 @@ class App extends React.Component {
                     menuOpen={this.state.menuOpen}
                     modalOpen={this.state.modalOpen}/> 
             : null }
-        <LoginPage changeMode={this.handleChangeMode}
+        {this.state.mode === AppMode.LOGIN ?
+        <LoginPage 
                    menuOpen={this.state.menuOpen}
                    modalOpen={this.state.dialogOpen}
-                   toggleModalOpen={this.state.toggleModalOpen} 
-                   userid={this.state.userId}/>
+                   toggleModalOpen={this.toggleModalOpen} 
+                   userid={this.state.userId}
+                   setMode={this.setMode}/>
+                   :
+        <FeedPage 
+
+          />
+        }
       </>
     ); 
   }

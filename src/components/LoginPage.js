@@ -1,6 +1,18 @@
 import React from 'react';
+import AppMode from './AppMode.js';
 
 class LoginPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
+      //added click handler for Login button click
+      handleLoginClick = () => {
+        this.props.setMode(AppMode.FEED);
+      }
+
     render() {
         return(
             <div id="loginPage" className="mode-page">
@@ -42,7 +54,7 @@ class LoginPage extends React.Component {
                     </div>
                 <p></p>
                 <button type="submit" id="loginBtn" 
-                        className="btn btn-primary fm-primary-btn">
+                        className="btn btn-primary fm-primary-btn" onClick={this.handleLoginClick}>
                     <span id="loginBtnIcon" 
                         className="fas fa-sign-in-alt" 
                         aria-hidden="true"></span>
@@ -60,7 +72,7 @@ class LoginPage extends React.Component {
                 </li>
                 </ul>
             </div>  
-        )
+        );
     }
 }
 
